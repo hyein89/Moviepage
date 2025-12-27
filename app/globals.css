@@ -1,3 +1,4 @@
+
 /* FIX CARD TINGGI ANEH */
 .animation-2 .item {
   height: auto !important;
@@ -236,11 +237,11 @@ h2.Featured{background:#a7239d33;border-left:8px solid rgba(0,0,0,.2);color:#FFF
 
 .module .content .items .item .poster{ width: 100%; height: 100%; float: left; position: relative; overflow: hidden; margin: 0; padding-top: 150%; border-radius: 7px;}
 
-.module .content .items .item .poster a .see{background:url(play1.svg) 50% 50% no-repeat;background-size:40% 40%;width:100%;height:100%;position:absolute;top:0;right:0;-webkit-transition:all .35s ease-in-out;transition:all .35s ease-in-out;opacity:0;}
+.module .content .items .item .poster a .see{background:url(/img/play1.svg) 50% 50% no-repeat;background-size:40% 40%;width:100%;height:100%;position:absolute;top:0;right:0;-webkit-transition:all .35s ease-in-out;transition:all .35s ease-in-out;opacity:0;}
 
 .module .content .items .item .poster a:hover>.see{-webkit-transform:scale(.75);transform:scale(.75);opacity:1;}
 
-.module .content .items .item .poster a .see.play3{background:url(play1.svg) 50% 50% no-repeat;background-size:40% 40%;}
+.module .content .items .item .poster a .see.play3{background:url(/img/play1.svg) 50% 50% no-repeat;background-size:40% 40%;}
 
 .module .content .items .item .poster .rating{background: #ffa500a1;color:#fff;text-shadow:1px 0 #000;position:absolute;bottom:0;right:0;padding:3px 8px;line-height:18px;font-size:12px;font-weight:600;margin-bottom:0;overflow:hidden;transition:.2s;}
 
