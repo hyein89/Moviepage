@@ -52,8 +52,20 @@ export default function Header() {
             <li><a href="/movies"><i className="fas fa-film"></i><div className="mvs">Movies</div></a></li>
             <li><a href="/populer"><i className="fas fa-chart-line"></i><div className="mvs">Popular Movies</div></a></li>
             <li><a href="/top-rated"><i className="fas fa-star"></i><div className="mvs">Top Rated Movies</div></a></li>
-            <li><a href="/now-playing"><i className="fas fa-tv"></i><div className="mvs">Now Playing Movies</div></a></li>
-            <li><a href="/upcoming"><i className="fas fa-chart-line"></i><div className="mvs">Upcoming Movies</div></a></li>
+             <li>
+  <a href="/now-playing">
+    <i className="fas fa-video"></i>
+    <div className="mvs">Now Playing Movies</div>
+  </a>
+</li>
+
+<li>
+  <a href="/upcoming">
+    <i className="fas fa-calendar-alt"></i>
+    <div className="mvs">Upcoming Movies</div>
+  </a>
+</li>
+            
           </ul>
         </div>
       </div>
