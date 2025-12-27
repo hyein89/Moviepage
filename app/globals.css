@@ -5,31 +5,6 @@ html, body {
 
 
 /* FIX CARD TINGGI ANEH */
-.animation-2 .item {
-  height: auto !important;
-}
-
-/* FIX POSTER CONTAINER */
-.animation-2 .item .poster {
-  position: relative;
-  overflow: hidden;
-  height: auto !important;
-}
-
-/* PAKSA IMG NGISI POSTER */
-.animation-2 .item .poster img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 2 / 3;
-}
-
-/* JAGA OVERLAY TETAP NEMPEL */
-.animation-2 .item .poster .rating,
-.animation-2 .item .poster .see,
-.animation-2 .item .poster .mepo {
-  position: absolute;
-}
 
 
 .pagination li a,
