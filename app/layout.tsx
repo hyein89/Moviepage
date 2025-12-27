@@ -42,7 +42,8 @@ export default function RootLayout({
           src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"
           strategy="afterInteractive"
         />
-
+<Script src="https://kit.fontawesome.com/a076d05399.js" strategy="afterInteractive"
+        />
         <Script
           src="/js/header.js"
           strategy="afterInteractive"
