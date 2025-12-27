@@ -1,5 +1,5 @@
 import { tmdbFetch } from '../../lib/tmdb'
-
+import { slugify } from '../../lib/slug'
 
 export default async function Page() {
   const data = await tmdbFetch('/movie/popular?language=id-ID')
@@ -9,9 +9,10 @@ export default async function Page() {
       <h2>Populer</h2>
       {data?.results.map((m: any) => (
         <div key={m.id}>
-          <a href={`/movie/${m.id}/${m.title}.html`}>
-            {m.title}
-          </a>
+          <a href={`/movie/${m.id}/${slugify(m.title)}.html`}>
+  {m.title}
+</a>
+
         </div>
       ))}
     </div>
