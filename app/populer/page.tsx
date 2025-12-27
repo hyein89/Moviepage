@@ -60,14 +60,14 @@ export default async function Page({
 
                   <div className="mepo" />
 
-                  <a href={`/movies/${movie.id}/${slugify(movie.title)}`}>
+                  <a href={`/movie/${movie.id}/${slugify(movie.title)}.html`}>
                     <div className="see play3" />
                   </a>
                 </div>
 
                 <div className="data">
                   <h3>
-                    <a href={`/movies/${movie.id}/${slugify(movie.title)}`}>
+                    <a href={`/movie/${movie.id}/${slugify(movie.title)}.xhtml `}>
                       {movie.title}
                     </a>
                   </h3>
