@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
-import { tmdbFetch } from '@/lib/tmdb'
+import { tmdbFetch } from '../../../../lib/tmdb'
+
 
 export async function generateMetadata({ params }: any) {
   const movie = await tmdbFetch(`/movie/${params.id}?language=id-ID`)
