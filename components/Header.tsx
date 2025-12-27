@@ -29,7 +29,7 @@ export default function Header() {
   method="get"
   id="form-search-resp"
   className="form-resp-ab"
-  action="/search"
+  action="/search?q="
 >
   <input
     type="text"
