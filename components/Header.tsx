@@ -26,18 +26,27 @@ export default function Header() {
 
       <div className="search_responsive">
         <form
-  action="/search"
   method="get"
   id="form-search-resp"
   className="form-resp-ab"
+  action="/search"
 >
   <input
-    type="search"
+    type="text"
     className="footer_search_input"
     placeholder="Search..."
-    name="q"
+    name="keyword_search"
+    id="keyword"
     autoComplete="off"
   />
+
+  <input id="key_pres" name="key_pres" type="hidden" />
+  <input
+    id="keyword_search_replace"
+    name="keyword_search_replace"
+    type="hidden"
+  />
+</form>
 
   {/* WAJIB ADA SUBMIT */}
   <button type="submit" style={{ display: 'none' }}>
