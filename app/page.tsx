@@ -16,31 +16,20 @@ function ratingTwo(vote: number) {
   return vote ? vote.toFixed(1) : '0.0'
 }
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: { page?: string }
-}) {
-  const page = Number(searchParams?.page || 1)
-
-  const movies = await tmdbFetch(
-    `/movie/popular?language=en-EN&page=${page}`
-  )
+export default async function Page() {
+  const movies = await tmdbFetch('/movie/popular?language=en-EN')
 
   if (!movies || !movies.results) {
     return <div>Gagal mengambil data movie</div>
   }
 
   const results: Movie[] = movies.results
-  const nextPage = page + 1
-  const prevPage = page - 1
 
   return (
     <div id="container">
       <div className="module">
         <div className="content right full">
-          <h1 className="Featured">Populer</h1>
-
+          <h1 className="Featured widget-title">Featured Movies <span><a href="/populer" className="see-all">See all</a></span></h1>
           <div className="animation-2 items full arch">
             {results.map((movie) => (
               <article className="item" key={movie.id}>
@@ -55,19 +44,20 @@ export default async function Page({
                   />
 
                   <div className="rating">
-                    <i className="fa fa-star" /> {ratingTwo(movie.vote_average)}
+                    <i className="fa fa-star" />{' '}
+                    {ratingTwo(movie.vote_average)}
                   </div>
 
                   <div className="mepo" />
 
-                  <a href={`/movies/${movie.id}/${slugify(movie.title)}`}>
+                  <a href={`/movie/${movie.id}/${slugify(movie.title)}`}>
                     <div className="see play3" />
                   </a>
                 </div>
 
                 <div className="data">
                   <h3>
-                    <a href={`/movies/${movie.id}/${slugify(movie.title)}`}>
+                    <a href={`/movie/${movie.id}/${slugify(movie.title)}`}>
                       {movie.title}
                     </a>
                   </h3>
@@ -76,45 +66,13 @@ export default async function Page({
               </article>
             ))}
           </div>
-
-          {/* PAGINATION */}
-          <div className="pagination">
-            <ul className="pagination">
-              {page > 1 && (
-                <li className="previous">
-                  <a href={`/?page=${prevPage}`}>{'<'}</a>
-                </li>
-              )}
-
-              {Array.from({ length: 5 }).map((_, i) => {
-                const p = page - 1 + i
-                if (p <= 0) return null
-
-                return (
-                  <li key={p} className={p === page ? 'active' : ''}>
-                    <a href={`/?page=${p}`}>{p}</a>
-                  </li>
-                )
-              })}
-
-              <li className="next">
-                <a href={`/?page=${nextPage}`}>{'>'}</a>
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
 
       <div className="clearfix" />
 
-      {/* BREADCRUMB */}
       <div className="breadcrumb">
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>Populer</li>
-        </ul>
+        
       </div>
     </div>
   )
