@@ -14,29 +14,6 @@ body {
 }
 
 
-.menu-item a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  text-align: center;
-}
-
-.menu-icon {
-  width: 42px;      /* ukuran icon */
-  height: 42px;
-  fill: #e5e5e5;    /* warna icon */
-  margin-bottom: 10px;
-}
-
-.mvs {
-  font-size: 14px;
-  color: #e5e5e5;
-}
-
-
-
 /* WRAPPER APP */
 #app {
   width: 100%;
