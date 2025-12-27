@@ -1,4 +1,3 @@
-
 export const dynamic = 'force-dynamic'
 import { tmdbFetch } from '../lib/tmdb'
 import { slugify } from '../lib/slug'
@@ -21,7 +20,7 @@ export default async function Page() {
         <div className="content right full">
 
           {/* FEATURED MOVIES */}
-          <div className="animation-2 items full">
+          <div className="animation-2 items full arch">
             <h1 className="Featured widget-title">
               Featured Movies <span><a href="/populer" className="see-all">See all</a></span>
             </h1>
