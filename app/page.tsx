@@ -1,68 +1,120 @@
 
+export const dynamic = 'force-dynamic'
+
 import { tmdbFetch } from '../lib/tmdb'
 import { slugify } from '../lib/slug'
-// helper ganti fungsi PHP
 
+type Movie = {
+  id: number
+  title: string
+  poster_path: string | null
+  vote_average: number
+  release_date: string | null
+}
 
 function ratingTwo(vote: number) {
   return vote ? vote.toFixed(1) : '0.0'
 }
 
-export default async function Page() {
-  const movies = await tmdbFetch('/movie/popular?language=en-EN')
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { page?: string }
+}) {
+  const page = Number(searchParams?.page || 1)
 
+  const movies = await tmdbFetch(
+    `/movie/popular?language=en-EN&page=${page}`
+  )
 
-  if (!movies) return 
+  if (!movies || !movies.results) {
+    return <div>Gagal mengambil data movie</div>
+  }
+
+  const results: Movie[] = movies.results
+  const nextPage = page + 1
+  const prevPage = page - 1
 
   return (
     <div id="container">
       <div className="module">
         <div className="content right full">
+          <h1 className="Featured">Populer</h1>
 
-          {/* FEATURED MOVIES */}
           <div className="animation-2 items full arch">
-            <h1 className="Featured">
-              Featured Movies <span><a href="/populer" className="see-all">See all</a></span>
-            </h1>
-
-            {movies.results.map((m: any) => (
-              <article className="item" key={m.id}>
+            {results.map((movie) => (
+              <article className="item" key={movie.id}>
                 <div className="poster">
                   <img
                     src={
-                      m.poster_path
-                        ? `https://image.tmdb.org/t/p/w185${m.poster_path}`
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w185${movie.poster_path}`
                         : '/img/noposter.png'
                     }
-                    alt={m.title}
+                    alt={movie.title}
                   />
 
                   <div className="rating">
-                    <i className="fa fa-star"></i> {ratingTwo(m.vote_average)}
+                    <i className="fa fa-star" /> {ratingTwo(movie.vote_average)}
                   </div>
 
-                  <div className="mepo"></div>
+                  <div className="mepo" />
 
-                  <a href={`/movie/${m.id}/${slugify(m.title)}.html`}>
-                    <div className="see play3"></div>
+                  <a href={`/movies/${movie.id}/${slugify(movie.title)}`}>
+                    <div className="see play3" />
                   </a>
                 </div>
 
                 <div className="data">
                   <h3>
-                    <a href={`/movie/${m.id}/${slugify(m.title)}.html`}>
-                      {m.title}
+                    <a href={`/movies/${movie.id}/${slugify(movie.title)}`}>
+                      {movie.title}
                     </a>
                   </h3>
-                  <span>{m.release_date || 'N/A'}</span>
+                  <span>{movie.release_date || 'N/A'}</span>
                 </div>
               </article>
             ))}
           </div>
 
-         
+          {/* PAGINATION */}
+          <div className="pagination">
+            <ul className="pagination">
+              {page > 1 && (
+                <li className="previous">
+                  <a href={`/?page=${prevPage}`}>{'<'}</a>
+                </li>
+              )}
 
+              {Array.from({ length: 5 }).map((_, i) => {
+                const p = page - 1 + i
+                if (p <= 0) return null
+
+                return (
+                  <li key={p} className={p === page ? 'active' : ''}>
+                    <a href={`/?page=${p}`}>{p}</a>
+                  </li>
+                )
+              })}
+
+              <li className="next">
+                <a href={`/?page=${nextPage}`}>{'>'}</a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
+
+      <div className="clearfix" />
+
+      {/* BREADCRUMB */}
+      <div className="breadcrumb">
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>Populer</li>
+        </ul>
       </div>
     </div>
   )
