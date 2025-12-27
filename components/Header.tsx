@@ -29,19 +29,16 @@ export default function Header() {
   method="get"
   id="form-search-resp"
   className="form-resp-ab"
-  action="/search?q="
+  action="/search"
 >
   <input
     type="text"
     className="footer_search_input"
     placeholder="Search..."
-    name="keyword_search"
+    name="q"
     id="keyword"
     autoComplete="off"
   />
-
-  {/* TAMBAHAN q */}
-  <input type="hidden" name="q" id="q" />
 
   <input id="key_pres" name="key_pres" type="hidden" />
   <input
@@ -50,9 +47,6 @@ export default function Header() {
     type="hidden"
   />
 </form>
-
-  
-
         <div className="live-search" id="header_search_autocomplete"></div>
       </div>
 
