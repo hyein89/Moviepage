@@ -53,7 +53,7 @@ export default function Header() {
             <li><a href="/populer"><i className="fas fa-chart-line"></i><div className="mvs">Popular Movies</div></a></li>
             <li><a href="/top-rated"><i className="fas fa-star"></i><div className="mvs">Top Rated Movies</div></a></li>
              <li>
-  <li>
+  
   <a href="/now-playing">
     <i className="fas fa-video"></i>
     <div className="mvs">Now Playing Movies</div>
