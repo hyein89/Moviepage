@@ -21,7 +21,7 @@ export default async function Page() {
 
           {/* FEATURED MOVIES */}
           <div className="animation-2 items full arch">
-            <h1 className="Featured widget-title">
+            <h1 className="Featured">
               Featured Movies <span><a href="/populer" className="see-all">See all</a></span>
             </h1>
 
