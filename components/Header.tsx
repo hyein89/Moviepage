@@ -40,6 +40,9 @@ export default function Header() {
     autoComplete="off"
   />
 
+  {/* TAMBAHAN q */}
+  <input type="hidden" name="q" id="q" />
+
   <input id="key_pres" name="key_pres" type="hidden" />
   <input
     id="keyword_search_replace"
