@@ -12,7 +12,7 @@ export default async function Page() {
   const movies = await tmdbFetch('/movie/popular?language=en-EN')
 
 
-  if (!movies) return <h1>TMDB NULL</h1>
+  if (!movies) return 
 
   return (
     <div id="container">
