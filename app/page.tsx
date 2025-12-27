@@ -16,9 +16,9 @@ function ratingTwo(vote: number) {
 
 export default async function Page() {
   const movies = await tmdbFetch('/movie/popular')
-  const tv = await tmdbFetch('/tv/popular')
 
-  if (!movies || !tv) return <h1>TMDB NULL</h1>
+
+  if (!movies) return <h1>TMDB NULL</h1>
 
   return (
     <div id="container">
