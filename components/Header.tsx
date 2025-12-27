@@ -50,13 +50,10 @@ export default function Header() {
           <ul className="resp">
             <li><a href="/"><i className="fas fa-home"></i><div className="mvs">Home</div></a></li>
             <li><a href="/movies"><i className="fas fa-film"></i><div className="mvs">Movies</div></a></li>
-            <li><a href="/populer"><i className="fas fa-chart-line"></i><div className="mvs">Trending Movies</div></a></li>
-            <li><a href="/trending"><i className="fas fa-star"></i><div className="mvs">Top Rated Movies</div></a></li>
-            <li><a href="/tv"><i className="fas fa-tv"></i><div className="mvs">TV Shows</div></a></li>
-            <li><a href="/trending-tv"><i className="fas fa-chart-line"></i><div className="mvs">Trending TV Shows</div></a></li>
-            <li><a href="/top-rated-tv"><i className="fas fa-star"></i><div className="mvs">Top Rated TV Shows</div></a></li>
-            <li><a href="https://autoembed.to/#embed-movies"><i className="fas fa-link"></i><div className="mvs">Auto Embed Movies</div></a></li>
-            <li><a href="https://autoembed.to/#embed-tv-shows"><i className="fas fa-link"></i><div className="mvs">Auto Embed TV Shows</div></a></li>
+            <li><a href="/populer"><i className="fas fa-chart-line"></i><div className="mvs">Popular Movies</div></a></li>
+            <li><a href="/top-rated"><i className="fas fa-star"></i><div className="mvs">Top Rated Movies</div></a></li>
+            <li><a href="/now-playing"><i className="fas fa-tv"></i><div className="mvs">Now Playing Movies</div></a></li>
+            <li><a href="/upcoming"><i className="fas fa-chart-line"></i><div className="mvs">Upcoming Movies</div></a></li>
           </ul>
         </div>
       </div>
