@@ -48,11 +48,7 @@ export default function Header() {
   />
 </form>
 
-  {/* WAJIB ADA SUBMIT */}
-  <button type="submit" style={{ display: 'none' }}>
-    Search
-  </button>
-</form>
+  
 
         <div className="live-search" id="header_search_autocomplete"></div>
       </div>
