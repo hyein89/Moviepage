@@ -1,4 +1,4 @@
-// app/layout.tsx
+
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import Header from '../components/Header'
@@ -11,31 +11,6 @@ export const metadata: Metadata = {
     template: '%s - mov',
   },
   description: 'dec',
-  robots: 'index, follow',
-
-  openGraph: {
-    title: 'dec',
-    description: 'dec',
-    images: ['/img/home.jpg'],
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'dec',
-  },
-
-  twitter: {
-    card: 'summary',
-    title: 'dec',
-    description: 'dec',
-    images: ['/img/home.jpg'],
-  },
-
-  icons: {
-    apple: '/favicon/apple-touch-icon.png',
-    icon: [
-      { url: '/favicon/favicon-32x32.png', sizes: '32x32' },
-      { url: '/favicon/favicon-16x16.png', sizes: '16x16' },
-    ],
-  },
 }
 
 export default function RootLayout({
@@ -45,24 +20,33 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-US">
-      <body>
+      <head>
+        {/* PENTING: viewport */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </head>
 
+      <body>
         <Header />
-        {children}
+
+        <main id="app">
+          {children}
+        </main>
+
         <Footer />
 
-        {/* JQUERY (DARI KODE LU) */}
+        {/* JQUERY */}
         <Script
           src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
         />
 
-        {/* JS HEADER LU (KALAU ADA) */}
         <Script
           src="/js/header.js"
           strategy="afterInteractive"
         />
-
       </body>
     </html>
   )
