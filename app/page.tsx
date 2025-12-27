@@ -1,6 +1,5 @@
-
 export const dynamic = 'force-dynamic'
-
+import { notFound } from "next/navigation";
 import { tmdbFetch } from '../lib/tmdb'
 import { slugify } from '../lib/slug'
 
@@ -19,10 +18,9 @@ function ratingTwo(vote: number) {
 export default async function Page() {
   const movies = await tmdbFetch('/movie/popular?language=en-EN')
 
-  if (!movies || !movies.results) {
-    return <div>Gagal mengambil data movie</div>
-  }
-
+  if (!data || !data.results || data.results.length === 0) {
+  notFound();
+}
   const results: Movie[] = movies.results
 
   return (
