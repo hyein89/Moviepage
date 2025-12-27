@@ -32,13 +32,17 @@ export default function Header() {
   className="form-resp-ab"
 >
   <input
-    type="text"
+    type="search"
     className="footer_search_input"
     placeholder="Search..."
     name="q"
-    id="keyword"
     autoComplete="off"
   />
+
+  {/* WAJIB ADA SUBMIT */}
+  <button type="submit" style={{ display: 'none' }}>
+    Search
+  </button>
 </form>
 
         <div className="live-search" id="header_search_autocomplete"></div>
