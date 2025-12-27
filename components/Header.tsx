@@ -54,8 +54,6 @@ export default function Header() {
             <li><a href="/top-rated"><i className="fas fa-star"></i><div className="mvs">Top Rated Movies</div></a></li>
              <li>
 
-
-<li>
   <a href="/now-playing" style={{ textAlign: "center" }}>
     <svg
       width="40"
