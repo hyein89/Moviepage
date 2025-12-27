@@ -1,8 +1,6 @@
+
+import { redirect } from 'next/navigation'
+
 export default function Page() {
-  return (
-    <div>
-      <h1>Root Page</h1>
-      <p>Ini halaman /</p>
-    </div>
-  )
+  redirect('/home')
 }
