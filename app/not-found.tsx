@@ -14,7 +14,7 @@ export default function NotFound() {
             <ul>
               <li>Please check if the URL is correct.</li>
               <br />
-              <li>Click the search button to search any movie/show.</li>
+              <li>Click the search button to search any movies</li>
               <br />
             </ul>
           </div>
