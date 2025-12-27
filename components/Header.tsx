@@ -55,23 +55,38 @@ export default function Header() {
              <li>
 
 
-               <li className="menu-item">
-  <a href="/now-playing">
-    <svg viewBox="0 0 24 24" className="menu-icon" aria-hidden="true">
+<li>
+  <a href="/now-playing" style={{ textAlign: "center" }}>
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      style={{ display: "block", margin: "0 auto 10px" }}
+    >
       <path d="M17 10.5V6c0-1.1-.9-2-2-2H3C1.9 4 1 4.9 1 6v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.5l6 4v-11l-6 4z"/>
     </svg>
     <div className="mvs">Now Playing Movies</div>
   </a>
 </li>
 
-<li className="menu-item">
-  <a href="/upcoming">
-    <svg viewBox="0 0 24 24" className="menu-icon" aria-hidden="true">
+<li>
+  <a href="/upcoming" style={{ textAlign: "center" }}>
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      style={{ display: "block", margin: "0 auto 10px" }}
+    >
       <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
     </svg>
     <div className="mvs">Upcoming Movies</div>
   </a>
 </li>
+               
             
           </ul>
         </div>
