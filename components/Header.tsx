@@ -53,8 +53,11 @@ export default function Header() {
             <li><a href="/populer"><i className="fas fa-chart-line"></i><div className="mvs">Popular Movies</div></a></li>
             <li><a href="/top-rated"><i className="fas fa-star"></i><div className="mvs">Top Rated Movies</div></a></li>
              <li>
+  <li>
   <a href="/now-playing">
-    <i className="fas fa-video"></i>
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+      <path d="M17 10.5V6c0-1.1-.9-2-2-2H3C1.9 4 1 4.9 1 6v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.5l6 4v-11l-6 4z"/>
+    </svg>
     <div className="mvs">Now Playing Movies</div>
   </a>
 </li>
