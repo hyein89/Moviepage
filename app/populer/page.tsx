@@ -23,7 +23,7 @@ export default async function Page({
   const page = Number(searchParams?.page || 1)
 
   const data = await tmdbFetch(
-    `/movie/popular?language=id-ID&page=${page}`
+    `/movie/popular?language=en-EN&page=${page}`
   )
 
   if (!data || !data.results) {
