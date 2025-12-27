@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+
 import { tmdbFetch } from '../lib/tmdb'
 import { slugify } from '../lib/slug'
 // helper ganti fungsi PHP
