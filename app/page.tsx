@@ -18,16 +18,24 @@ function ratingTwo(vote: number) {
 export default async function Page() {
   const movies = await tmdbFetch('/movie/popular?language=en-EN')
 
-  if (!data || !data.results || data.results.length === 0) {
-  notFound();
-}
+  // ✅ ini yang benar
+  if (!movies || !movies.results || movies.results.length === 0) {
+    notFound()
+  }
+
   const results: Movie[] = movies.results
 
   return (
     <div id="container">
       <div className="module">
         <div className="content right full">
-          <h1 className="Featured widget-title">Featured Movies <span><a href="/populer" className="see-all">See all</a></span></h1>
+          <h1 className="Featured widget-title">
+            Featured Movies{" "}
+            <span>
+              <a href="/populer" className="see-all">See all</a>
+            </span>
+          </h1>
+
           <div className="animation-2 items full arch">
             {results.map((movie) => (
               <article className="item" key={movie.id}>
@@ -42,20 +50,19 @@ export default async function Page() {
                   />
 
                   <div className="rating">
-                    <i className="fa fa-star" />{' '}
-                    {ratingTwo(movie.vote_average)}
+                    <i className="fa fa-star" /> {ratingTwo(movie.vote_average)}
                   </div>
 
                   <div className="mepo" />
 
-                  <a href={`/movie/${movie.id}/${slugify(movie.title)}`}>
+                  <a href={`/movie/${movie.id}/${slugify(movie.title)}.html`}>
                     <div className="see play3" />
                   </a>
                 </div>
 
                 <div className="data">
                   <h3>
-                    <a href={`/movie/${movie.id}/${slugify(movie.title)}`}>
+                    <a href={`/movie/${movie.id}/${slugify(movie.title)}.html`}>
                       {movie.title}
                     </a>
                   </h3>
@@ -68,8 +75,6 @@ export default async function Page() {
       </div>
 
       <div className="clearfix" />
-
-      
     </div>
   )
 }
