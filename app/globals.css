@@ -8,18 +8,15 @@
 /* HILANGIN RUANG KOSONG ATAS */
 html,
 body {
-  width: 100%;
-  height: 100%;
   margin: 0;
   padding: 0;
-  background: #000;
   overflow-x: hidden;
 }
 
 /* WRAPPER APP */
 #app {
   width: 100%;
-  min-height: 100vh;
+
 }
 
 /* HEADER PAKSA NEMPEL ATAS */
@@ -29,10 +26,6 @@ header {
   top: 0;
 }
 
-/* FIX MOBILE CHROME */
-img {
-  display: block;
-}
 
 .pagination li a,
 .pagination li span {
