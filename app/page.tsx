@@ -1,21 +1,16 @@
+
 export const dynamic = 'force-dynamic'
-
 import { tmdbFetch } from '../lib/tmdb'
-
+import { slugify } from '../../lib/slug'
 // helper ganti fungsi PHP
-function slugify(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/[^\w ]+/g, '')
-    .replace(/ +/g, '-')
-}
+
 
 function ratingTwo(vote: number) {
   return vote ? vote.toFixed(1) : '0.0'
 }
 
 export default async function Page() {
-  const movies = await tmdbFetch('/movie/popular')
+  const movies = await tmdbFetch('/movie/popular?language=en-EN')
 
 
   if (!movies) return <h1>TMDB NULL</h1>
@@ -49,14 +44,14 @@ export default async function Page() {
 
                   <div className="mepo"></div>
 
-                  <a href={`/movies/${m.id}/${slugify(m.title)}`}>
+                  <a href={`/movie/${m.id}/${slugify(m.title)}.html`}>
                     <div className="see play3"></div>
                   </a>
                 </div>
 
                 <div className="data">
                   <h3>
-                    <a href={`/movies/${m.id}/${slugify(m.title)}`}>
+                    <a href={`/movie/${m.id}/${slugify(m.title)}.html`}>
                       {m.title}
                     </a>
                   </h3>
@@ -73,4 +68,3 @@ export default async function Page() {
     </div>
   )
 }
-
