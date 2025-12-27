@@ -56,8 +56,8 @@ export default function Header() {
 
   <a href="/now-playing" style={{ textAlign: "center" }}>
     <svg
-      width="40"
-      height="40"
+      width="50"
+      height="50"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
@@ -72,8 +72,8 @@ export default function Header() {
 <li>
   <a href="/upcoming" style={{ textAlign: "center" }}>
     <svg
-      width="40"
-      height="40"
+      width="50"
+      height="50"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
