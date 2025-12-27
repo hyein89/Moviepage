@@ -71,9 +71,7 @@ export default async function Page() {
 
       <div className="clearfix" />
 
-      <div className="breadcrumb">
-        
-      </div>
+      
     </div>
   )
 }
