@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { tmdbFetch } from '../../lib/tmdb'
 import { slugify } from '../../lib/slug'
 
@@ -26,9 +27,9 @@ export default async function Page({
     `/movie/top_rated?language=en-EN&page=${page}`
   )
 
-  if (!data || !data.results) {
-    return <div>Gagal mengambil data movie top-rated</div>
-  }
+  if (!data || !data.results || data.results.length === 0) {
+  notFound();
+}
 
   const results: Movie[] = data.results
   const nextPage = page + 1
@@ -60,14 +61,14 @@ export default async function Page({
 
                   <div className="mepo" />
 
-                  <a href={`/movies/${movie.id}/${slugify(movie.title)}`}>
+                  <a href={`/movie/${movie.id}/${slugify(movie.title)}.html`}>
                     <div className="see play3" />
                   </a>
                 </div>
 
                 <div className="data">
                   <h3>
-                    <a href={`/movies/${movie.id}/${slugify(movie.title)}`}>
+                    <a href={`/movie/${movie.id}/${slugify(movie.title)}.html`}>
                       {movie.title}
                     </a>
                   </h3>
