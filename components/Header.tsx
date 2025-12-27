@@ -35,7 +35,7 @@ export default function Header() {
     type="text"
     className="footer_search_input"
     placeholder="Search..."
-    name="q"
+    name="keyword_search"
     id="keyword"
     autoComplete="off"
   />
