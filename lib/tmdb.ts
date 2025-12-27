@@ -1,20 +1,18 @@
 
-const BASE = 'https://api.themoviedb.org/3'
-
 export async function tmdbFetch(endpoint: string) {
-  const url =
-    `${BASE}${endpoint}` +
-    (endpoint.includes('?') ? '&' : '?') +
-    `api_key=${process.env.TMDB_API_KEY}`
-
-  console.log('FETCH TMDB:', url)
-
-  const res = await fetch(url, {
-    cache: 'no-store', // ⬅️ INI WAJIB
-  })
+  const res = await fetch(
+    `https://api.themoviedb.org/3${endpoint}`,
+    {
+      cache: 'no-store',
+      headers: {
+        Authorization: `Bearer ${process.env.TMDB_BEARER}`,
+        'Content-Type': 'application/json'
+      }
+    }
+  )
 
   if (!res.ok) {
-    console.error('TMDB STATUS:', res.status)
+    console.error(res.status)
     return null
   }
 
