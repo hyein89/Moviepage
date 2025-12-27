@@ -1,4 +1,5 @@
-import { tmdbFetch } from '@/lib/tmdb'
+import { tmdbFetch } from '../../lib/tmdb'
+
 
 export default async function Page() {
   const data = await tmdbFetch('/trending/movie/day?language=id-ID')
