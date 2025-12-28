@@ -1,5 +1,10 @@
+import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
-
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: { page?: string }
+}): Promise<Metadata> {
   const domain = 'https://www.xydntvdsg.eu.org'
 
   return {
