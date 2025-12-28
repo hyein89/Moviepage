@@ -28,7 +28,7 @@ export async function generateMetadata(
     ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
     : `${domain}/og-default.jpg`
 
-  const canonicalUrl = `${domain}/movie/${params.id}/${params.slug}`
+  const canonicalUrl = `${domain}/movie/${movie.id}/${slugify(movie.title)}`
   
   return {
     metadataBase: new URL(domain),
