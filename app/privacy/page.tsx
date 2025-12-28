@@ -4,7 +4,7 @@ export default function PrivacyPolicy() {
   const domain =
     typeof window !== 'undefined'
       ? window.location.hostname
-      : 'yourdomain.com'
+      : 'xydntvdsg.eu.org'
 
   return (
     <div id="container">
