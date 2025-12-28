@@ -28,6 +28,8 @@ export async function generateMetadata(
     ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
     : `${domain}/og-default.jpg`
 
+  const canonicalUrl = `${domain}/movie/${params.id}/${params.slug}`
+  
   return {
     metadataBase: new URL(domain),
 
@@ -58,12 +60,6 @@ export async function generateMetadata(
   }
 }
 
-return {
-    alternates: {
-      canonical: `${domain}/movie/${params.id}/${params.slug}.html`,
-    },
-  }
-}
 /* ================= PAGE ================= */
 export default async function Page({ params }: any) {
   const movie = await tmdbFetch(
