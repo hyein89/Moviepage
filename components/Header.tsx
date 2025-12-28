@@ -26,26 +26,20 @@ export default function Header() {
 
       <div className="search_responsive">
         
-        <form
+        <form   id="form-search-resp"
+  action="/search" className="form-resp-ab"
   method="get"
-  id="form-search-resp"
-  className="form-resp-ab"
-  action="/search"
+  onKeyDown={(e) => {
+    if (e.key === 'Enter') {
+      e.currentTarget.submit()
+    }
+  }}
 >
   <input
-    type="text"
+    type="search"
     className="footer_search_input"
-    placeholder="Search..."
     name="q"
-    id="keyword"
-    autoComplete="off"
-  />
-
-  <input id="key_pres" name="key_pres" type="hidden" />
-  <input
-    id="keyword_search_replace"
-    name="keyword_search_replace"
-    type="hidden"
+    placeholder="Search..."
   />
 </form>
         <div className="live-search" id="header_search_autocomplete"></div>
