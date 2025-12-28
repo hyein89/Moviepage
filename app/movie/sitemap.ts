@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urls: MetadataRoute.Sitemap = responses
     .flatMap((res: any) => res?.results || [])
     .map((movie: any) => ({
-      url: `${domain}/movie/${movie.id}/${slugify(movie.title)}`,
+      url: `${domain}/movie/${movie.id}/${slugify(movie.title)}.html`,
       lastModified: movie.release_date
         ? new Date(movie.release_date)
         : new Date(),
