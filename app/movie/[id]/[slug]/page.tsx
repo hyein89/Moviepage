@@ -236,6 +236,7 @@ export default async function Page({ params }: any) {
                         {movie.spoken_languages
                           ?.map((l: any) => l.english_name)
                           .join(', ')}
+                        <br /><br />
                       </li>
                     </ul>
                   </div>
