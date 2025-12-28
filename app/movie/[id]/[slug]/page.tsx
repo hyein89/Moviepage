@@ -9,9 +9,6 @@ import { OFFER_LINKS } from '../../../../lib/offers'
 export const dynamic = 'force-dynamic'
 
 /* ================= METADATA ================= */
-import type { Metadata } from 'next'
-import { tmdbFetch } from '../../../../lib/tmdb'
-import { slugify } from '../../../../lib/slug'
 
 export async function generateMetadata(
   { params }: any
