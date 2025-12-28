@@ -8,6 +8,8 @@ import { OFFER_LINKS } from '../../../../lib/offers'
 
 export const dynamic = 'force-dynamic'
 
+
+
 /* ================= METADATA ================= */
 export async function generateMetadata(
   { params }: any
@@ -52,6 +54,13 @@ export async function generateMetadata(
       title: movie.title,
       description: movie.overview,
       images: [imageUrl],
+    },
+  }
+}
+
+return {
+    alternates: {
+      canonical: `${domain}/movie/${params.id}/${params.slug}.html`,
     },
   }
 }
