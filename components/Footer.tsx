@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="main">
       <div className="fbox">
         <div className="fcmpbox">
-          <div className="copy">© 2025 WtsMovies</div>
+          <div className="copy">© 2025 WTS Movies </div>
 
           <span className="top-page">
             <a
