@@ -1,8 +1,9 @@
 export function slugify(text: string) {
   return text
     .toLowerCase()
-    .replace(/:/g, '')        // hapus :
-    .replace(/[^a-z0-9\s-]/g, '') // hapus simbol aneh
+    .normalize('NFKD')                 // normalize unicode
+    .replace(/[\u0300-\u036f]/g, '')   // hapus accent latin
+    .replace(/[^\p{L}\p{N}\s-]/gu, '') // SUPPORT SEMUA BAHASA
     .trim()
-    .replace(/\s+/g, '-')     // spasi -> -
+    .replace(/\s+/g, '-')
 }
