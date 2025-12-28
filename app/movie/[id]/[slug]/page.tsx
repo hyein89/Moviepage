@@ -1,3 +1,4 @@
+
 import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { tmdbFetch } from '../../../../lib/tmdb'
@@ -6,48 +7,63 @@ import { OFFER_LINKS } from '../../../../lib/offers'
 
 export const dynamic = 'force-dynamic'
 
+const DOMAIN = 'https://www.xydntvdsg.eu.org'
+
 /* ================= METADATA ================= */
 export async function generateMetadata({ params }: any) {
-  const movie = await tmdbFetch(
-    `/movie/${params.id}?language=en-EN`
-  )
-
+  const movie = await tmdbFetch(`/movie/${params.id}?language=en-EN`)
   if (!movie) return {}
 
+  const title = `${movie.title} (${movie.release_date?.slice(0, 4)})`
+  const description =
+    movie.overview || 'Watch movie online in HD quality'
+
+  const image = movie.backdrop_path
+    ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`
+    : `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+
+  const url = `${DOMAIN}/movie/${params.id}/${params.slug}`
+
   return {
-    title: `${movie.title} (${movie.release_date?.slice(0, 4)})`,
-    description: movie.overview,
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
-      images: movie.backdrop_path
-        ? [
-            {
-              url: `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`,
-            },
-          ]
-        : [],
+      title,
+      description,
+      url,
+      siteName: 'WTS Movies',
+      type: 'video.movie',
+      images: [
+        {
+          url: image,
+          width: 780,
+          height: 439,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
     },
   }
 }
 
 /* ================= PAGE ================= */
 export default async function Page({ params }: any) {
-  const movie = await tmdbFetch(
-    `/movie/${params.id}?language=en-EN`
-  )
-
+  const movie = await tmdbFetch(`/movie/${params.id}?language=en-EN`)
   if (!movie) notFound()
 
-  const credits = await tmdbFetch(
-    `/movie/${params.id}/credits`
-  )
-
-  const videos = await tmdbFetch(
-    `/movie/${params.id}/videos`
-  )
+  const credits = await tmdbFetch(`/movie/${params.id}/credits`)
+  const videos = await tmdbFetch(`/movie/${params.id}/videos`)
+  const trending = await tmdbFetch(`/movie/popular?language=id-ID`)
 
   const trailer = videos?.results?.find(
-    (v: any) =>
-      v.type === 'Trailer' && v.site === 'YouTube'
+    (v: any) => v.type === 'Trailer' && v.site === 'YouTube'
   )
 
   const director = credits?.crew?.find(
@@ -55,26 +71,18 @@ export default async function Page({ params }: any) {
   )
 
   const year = movie.release_date?.slice(0, 4) || 'N/A'
-  const runtime = movie.runtime
-    ? `${movie.runtime} min`
-    : 'N/A'
+  const runtime = movie.runtime ? `${movie.runtime} min` : 'N/A'
 
+  const movieUrl = `${DOMAIN}/movie/${movie.id}/${slugify(movie.title)}`
   const embedUrl = `https://vidsrc.to/embed/movie/${movie.id}`
-
-  const trending = await tmdbFetch(
-    `/movie/popular?language=id-ID`
-  )
-
-  const domain = 'https://moviepage-ten.vercel.app'
-  const movieUrl = `${domain}/movie/${movie.id}/${slugify(movie.title)}`
 
   return (
     <>
-      {/* ================= JSON-LD SEO ================= */}
+      {/* ================= JSON-LD SEO (SERVER RENDERED) ================= */}
       <Script
         id="movie-schema"
         type="application/ld+json"
-        strategy="afterInteractive"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
@@ -95,27 +103,9 @@ export default async function Page({ params }: any) {
       />
 
       <Script
-        id="website-schema"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            url: domain,
-            potentialAction: {
-              '@type': 'SearchAction',
-              target: `${domain}/search?q={search_term_string}`,
-              'query-input': 'required name=search_term_string',
-            },
-          }),
-        }}
-      />
-
-      <Script
         id="breadcrumb-schema"
         type="application/ld+json"
-        strategy="afterInteractive"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
@@ -125,13 +115,13 @@ export default async function Page({ params }: any) {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: domain,
+                item: DOMAIN,
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Movies',
-                item: `${domain}/movies`,
+                item: `${DOMAIN}/movies`,
               },
               {
                 '@type': 'ListItem',
@@ -148,99 +138,92 @@ export default async function Page({ params }: any) {
       <div id="container">
         <div className="module">
           <div className="content">
-
             {/* LEFT */}
             <div className="video-info-left">
-              <div className="content-more-js" id="rmjs-1">
-                <div className="watch_play">
-                  <div className="play-video">
-                    <iframe
-                      id="player"
-                      src={embedUrl}
-                      allowFullScreen
-                      frameBorder="0"
-                      scrolling="no"
-                    />
-                  </div>
+              <div className="watch_play">
+                <div className="play-video">
+                  <iframe
+                    id="player"
+                    src={embedUrl}
+                    allowFullScreen
+                    frameBorder="0"
+                    scrolling="no"
+                  />
                 </div>
+              </div>
 
-                <div className="dst">
-  {trailer && (
-    <a
-      href={`https://www.youtube.com/watch?v=${trailer.key}`}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <i className="fas fa-play-circle"></i> Watch Trailer
-    </a>
-  )}
+              <div className="dst">
+                {trailer && (
+                  <a
+                    href={`https://www.youtube.com/watch?v=${trailer.key}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    ▶ Watch Trailer
+                  </a>
+                )}
 
-  <a
-    href={OFFER_LINKS.torrent}
-    target="_blank"
-    rel="nofollow noopener noreferrer"
-    title={`Download torrent ${movie.title}`}
-  >
-    <i className="fas fa-download"></i> Download torrent
-  </a>
+                <a
+                  href={OFFER_LINKS.torrent}
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                >
+                  ⬇ Download Torrent
+                </a>
 
-  <a
-    href={OFFER_LINKS.subtitle}
-    target="_blank"
-    rel="nofollow noopener noreferrer"
-    title={`Download subtitle ${movie.title}`}
-  >
-    <i className="fas fa-download"></i> Download subtitle
-  </a>
-</div>
+                <a
+                  href={OFFER_LINKS.subtitle}
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                >
+                  ⬇ Download Subtitle
+                </a>
+              </div>
 
-                <div className="rgt">
-                  <div className="rgtp">
-                    <h1>
-                      {movie.title} - {year}
-                    </h1>
+              <div className="rgt">
+                <h1>
+                  {movie.title} - {year}
+                </h1>
 
-                    <p>
-                      {movie.release_date} • {runtime}
-                    </p>
+                <p>
+                  {movie.release_date} • {runtime}
+                </p>
 
-                    <ul className="genre">
-                      {movie.genres?.map((g: any) => (
-                        <li key={g.id}>{g.name}</li>
-                      ))}
-                    </ul>
+                <ul className="genre">
+                  {movie.genres?.map((g: any) => (
+                    <li key={g.id}>{g.name}</li>
+                  ))}
+                </ul>
 
-                    <p>{movie.overview}</p>
+                <p>{movie.overview}</p>
 
-                    <ul className="movie-meta">
-                      <li>
-                        <strong>Rating:</strong>{' '}
-                        {movie.vote_average?.toFixed(1)} (
-                        {movie.vote_count} votes)
-                      </li>
-                      <li>
-                        <strong>Status:</strong> {movie.status}
-                      </li>
-                      <li>
-                        <strong>Director:</strong>{' '}
-                        {director?.name || 'N/A'}
-                      </li>
-                      <li>
-                        <strong>Country:</strong>{' '}
-                        {movie.production_countries
-                          ?.map((c: any) => c.name)
-                          .join(', ')}
-                      </li>
-                      <li>
-                        <strong>Language:</strong>{' '}
-                        {movie.spoken_languages
-                          ?.map((l: any) => l.english_name)
-                          .join(', ')}
-                        <br /><br />
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                <ul className="movie-meta">
+                  <li>
+                    <strong>Rating:</strong>{' '}
+                    {movie.vote_average?.toFixed(1)} (
+                    {movie.vote_count} votes)
+                  </li>
+                  <li>
+                    <strong>Status:</strong> {movie.status}
+                  </li>
+                  <li>
+                    <strong>Director:</strong>{' '}
+                    {director?.name || 'N/A'}
+                  </li>
+                  <li>
+                    <strong>Country:</strong>{' '}
+                    {movie.production_countries
+                      ?.map((c: any) => c.name)
+                      .join(', ')}
+                  </li>
+                  <li>
+                    <strong>Language:</strong>{' '}
+                    {movie.spoken_languages
+                      ?.map((l: any) => l.english_name)
+                      .join(', ')}
+                    <br /><br />
+                  </li>
+                </ul>
               </div>
             </div>
 
@@ -261,10 +244,9 @@ export default async function Page({ params }: any) {
                         alt={m.title}
                       />
                       <div className="rating">
-                        <i className="fa fa-star"></i>{' '}
-                        {m.vote_average?.toFixed(1)}
+                        ★ {m.vote_average?.toFixed(1)}
                       </div>
-                      <a href={`/movie/${m.id}/${slugify(m.title)}`}>
+                      <a href={`/movie/${m.id}/${slugify(m.title)}.html`}>
                         <div className="see play3"></div>
                       </a>
                     </div>
