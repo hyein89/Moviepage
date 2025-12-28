@@ -153,77 +153,82 @@ export default async function Page({ params }: any) {
               </div>
 
               <div className="dst">
-                {trailer && (
-                  <a
-                    href={`https://www.youtube.com/watch?v=${trailer.key}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    ▶ Watch Trailer
-                  </a>
-                )}
+  {trailer && (
+    <a
+      href={`https://www.youtube.com/watch?v=${trailer.key}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <i className="fas fa-play-circle"></i> Watch Trailer
+    </a>
+  )}
 
-                <a
-                  href={OFFER_LINKS.torrent}
-                  target="_blank"
-                  rel="nofollow noopener noreferrer"
-                >
-                  ⬇ Download Torrent
-                </a>
+  <a
+    href={OFFER_LINKS.torrent}
+    target="_blank"
+    rel="nofollow noopener noreferrer"
+    title={`Download torrent ${movie.title}`}
+  >
+    <i className="fas fa-download"></i> Download torrent
+  </a>
 
-                <a
-                  href={OFFER_LINKS.subtitle}
-                  target="_blank"
-                  rel="nofollow noopener noreferrer"
-                >
-                  ⬇ Download Subtitle
-                </a>
-              </div>
+  <a
+    href={OFFER_LINKS.subtitle}
+    target="_blank"
+    rel="nofollow noopener noreferrer"
+    title={`Download subtitle ${movie.title}`}
+  >
+    <i className="fas fa-download"></i> Download subtitle
+  </a>
+</div>
 
-              <div className="rgt">
-                <h1>
-                  {movie.title} - {year}
-                </h1>
+                <div className="rgt">
+                  <div className="rgtp">
+                    <h1>
+                      {movie.title} - {year}
+                    </h1>
 
-                <p>
-                  {movie.release_date} • {runtime}
-                </p>
+                    <p>
+                      {movie.release_date} • {runtime}
+                    </p>
 
-                <ul className="genre">
-                  {movie.genres?.map((g: any) => (
-                    <li key={g.id}>{g.name}</li>
-                  ))}
-                </ul>
+                    <ul className="genre">
+                      {movie.genres?.map((g: any) => (
+                        <li key={g.id}>{g.name}</li>
+                      ))}
+                    </ul>
 
-                <p>{movie.overview}</p>
+                    <p>{movie.overview}</p>
 
-                <ul className="movie-meta">
-                  <li>
-                    <strong>Rating:</strong>{' '}
-                    {movie.vote_average?.toFixed(1)} (
-                    {movie.vote_count} votes)
-                  </li>
-                  <li>
-                    <strong>Status:</strong> {movie.status}
-                  </li>
-                  <li>
-                    <strong>Director:</strong>{' '}
-                    {director?.name || 'N/A'}
-                  </li>
-                  <li>
-                    <strong>Country:</strong>{' '}
-                    {movie.production_countries
-                      ?.map((c: any) => c.name)
-                      .join(', ')}
-                  </li>
-                  <li>
-                    <strong>Language:</strong>{' '}
-                    {movie.spoken_languages
-                      ?.map((l: any) => l.english_name)
-                      .join(', ')}
-                    <br /><br />
-                  </li>
-                </ul>
+                    <ul className="movie-meta">
+                      <li>
+                        <strong>Rating:</strong>{' '}
+                        {movie.vote_average?.toFixed(1)} (
+                        {movie.vote_count} votes)
+                      </li>
+                      <li>
+                        <strong>Status:</strong> {movie.status}
+                      </li>
+                      <li>
+                        <strong>Director:</strong>{' '}
+                        {director?.name || 'N/A'}
+                      </li>
+                      <li>
+                        <strong>Country:</strong>{' '}
+                        {movie.production_countries
+                          ?.map((c: any) => c.name)
+                          .join(', ')}
+                      </li>
+                      <li>
+                        <strong>Language:</strong>{' '}
+                        {movie.spoken_languages
+                          ?.map((l: any) => l.english_name)
+                          .join(', ')}
+                        <br /><br />
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
 
