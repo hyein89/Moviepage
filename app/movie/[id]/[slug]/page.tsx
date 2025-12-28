@@ -8,9 +8,11 @@ import { OFFER_LINKS } from '../../../../lib/offers'
 
 export const dynamic = 'force-dynamic'
 
-
-
 /* ================= METADATA ================= */
+import type { Metadata } from 'next'
+import { tmdbFetch } from '../../../../lib/tmdb'
+import { slugify } from '../../../../lib/slug'
+
 export async function generateMetadata(
   { params }: any
 ): Promise<Metadata> {
@@ -18,9 +20,7 @@ export async function generateMetadata(
     `/movie/${params.id}?language=en-EN`
   )
 
-  if (!movie) {
-    return {}
-  }
+  if (!movie) return {}
 
   const domain = 'https://www.xydntvdsg.eu.org'
 
@@ -29,16 +29,21 @@ export async function generateMetadata(
     : `${domain}/og-default.jpg`
 
   const canonicalUrl = `${domain}/movie/${movie.id}/${slugify(movie.title)}`
-  
+
   return {
     metadataBase: new URL(domain),
 
     title: `${movie.title} (${movie.release_date?.slice(0, 4)})`,
     description: movie.overview,
 
+    // ✅ INI YANG KAMU BELUM PASANG
+    alternates: {
+      canonical: canonicalUrl,
+    },
+
     openGraph: {
       type: 'video.movie',
-      url: `${domain}/movie/${movie.id}/${slugify(movie.title)}`,
+      url: canonicalUrl,
       title: movie.title,
       description: movie.overview,
       images: [
