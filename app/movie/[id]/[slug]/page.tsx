@@ -165,14 +165,17 @@ export default async function Page({ params }: any) {
                 </div>
 
                 <div className="dst">
-                  {trailer && (
-                    <a
-                      href={`https://www.youtube.com/watch?v=${trailer.key}`}
-                      target="_blank"
-                    >
-                      <i className="fas fa-play-circle"></i> Watch Trailer
-                    </a>
-                     <a
+  {trailer && (
+    <a
+      href={`https://www.youtube.com/watch?v=${trailer.key}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <i className="fas fa-play-circle"></i> Watch Trailer
+    </a>
+  )}
+
+  <a
     href={OFFER_LINKS.torrent}
     target="_blank"
     rel="nofollow noopener noreferrer"
@@ -189,10 +192,7 @@ export default async function Page({ params }: any) {
   >
     <i className="fas fa-download"></i> Download subtitle
   </a>
-      
-      
-                  )}
-                </div>
+</div>
 
                 <div className="rgt">
                   <div className="rgtp">
