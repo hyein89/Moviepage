@@ -15,6 +15,40 @@ function ratingTwo(vote: number) {
   return vote ? vote.toFixed(1) : '0.0'
 }
 
+/**
+ * Pagination helper
+ * Output contoh:
+ * < 1 2 3 … 9 10 >
+ */
+function getPaginationPages(
+  current: number,
+  total: number
+): (number | 'dots')[] {
+  const pages: (number | 'dots')[] = []
+
+  if (total <= 7) {
+    for (let i = 1; i <= total; i++) pages.push(i)
+    return pages
+  }
+
+  pages.push(1)
+
+  if (current > 4) pages.push('dots')
+
+  const start = Math.max(2, current - 1)
+  const end = Math.min(total - 1, current + 1)
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i)
+  }
+
+  if (current < total - 3) pages.push('dots')
+
+  pages.push(total)
+
+  return pages
+}
+
 export default async function Page({
   searchParams,
 }: {
@@ -23,7 +57,7 @@ export default async function Page({
   const query = searchParams?.q || ''
   const page = Number(searchParams?.page || 1)
 
-  // 👉 kalau belum ada keyword
+  // ===== TANPA KEYWORD =====
   if (!query) {
     return (
       <div id="container">
@@ -37,7 +71,7 @@ export default async function Page({
     )
   }
 
-  // 👉 fetch search
+  // ===== FETCH SEARCH =====
   const data = await tmdbFetch(
     `/search/movie?language=en-EN&query=${encodeURIComponent(
       query
@@ -64,13 +98,13 @@ export default async function Page({
       <div className="module">
         <div className="content right full">
           <h1 className="Featured">
-            SEARCH RESULTS: <span>{query}</span>
+            HASIL PENCARIAN: <span>{query}</span>
           </h1>
 
-          {/* LIST MOVIE */}
+          {/* ===== LIST MOVIE ===== */}
           <div className="animation-2 items full arch">
             {results.length === 0 && (
-              <p>Movie not found.</p>
+              <p>Movie tidak ditemukan.</p>
             )}
 
             {results.map((movie) => (
@@ -111,7 +145,7 @@ export default async function Page({
             ))}
           </div>
 
-          {/* PAGINATION — MUNCUL HANYA JIKA VALID */}
+          {/* ===== PAGINATION (MODEL LAMA) ===== */}
           {results.length > 0 && totalPages > 1 && (
             <div className="pagination">
               <ul className="pagination">
@@ -123,13 +157,12 @@ export default async function Page({
                   </li>
                 )}
 
-                {Array.from({ length: totalPages }).map((_, i) => {
-                  const p = i + 1
-
-                  // batasi max 10 tombol biar rapi
-                  if (p > 10) return null
-
-                  return (
+                {getPaginationPages(page, totalPages).map((p, i) =>
+                  p === 'dots' ? (
+                    <li key={`dots-${i}`} className="dots">
+                      …
+                    </li>
+                  ) : (
                     <li
                       key={p}
                       className={p === page ? 'active' : ''}
@@ -139,7 +172,7 @@ export default async function Page({
                       </a>
                     </li>
                   )
-                })}
+                )}
 
                 {page < totalPages && (
                   <li className="next">
@@ -155,8 +188,6 @@ export default async function Page({
       </div>
 
       <div className="clearfix" />
-
-      
     </div>
   )
 }
