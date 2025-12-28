@@ -1,69 +1,79 @@
 
 import { notFound } from 'next/navigation'
 import Script from 'next/script'
+import type { Metadata } from 'next'
 import { tmdbFetch } from '../../../../lib/tmdb'
 import { slugify } from '../../../../lib/slug'
 import { OFFER_LINKS } from '../../../../lib/offers'
 
 export const dynamic = 'force-dynamic'
 
-const DOMAIN = 'https://www.xydntvdsg.eu.org'
-
 /* ================= METADATA ================= */
-export async function generateMetadata({ params }: any) {
-  const movie = await tmdbFetch(`/movie/${params.id}?language=en-EN`)
-  if (!movie) return {}
+export async function generateMetadata(
+  { params }: any
+): Promise<Metadata> {
+  const movie = await tmdbFetch(
+    `/movie/${params.id}?language=en-EN`
+  )
 
-  const title = `${movie.title} (${movie.release_date?.slice(0, 4)})`
-  const description =
-    movie.overview || 'Watch movie online in HD quality'
+  if (!movie) {
+    return {}
+  }
 
-  const image = movie.backdrop_path
-    ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`
-    : `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+  const domain = 'https://moviepage-ten.vercel.app'
 
-  const url = `${DOMAIN}/movie/${params.id}/${params.slug}`
+  const imageUrl = movie.backdrop_path
+    ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+    : `${domain}/og-default.jpg`
 
   return {
-    title,
-    description,
-    alternates: {
-      canonical: url,
-    },
+    metadataBase: new URL(domain),
+
+    title: `${movie.title} (${movie.release_date?.slice(0, 4)})`,
+    description: movie.overview,
+
     openGraph: {
-      title,
-      description,
-      url,
-      siteName: 'WTS Movies',
       type: 'video.movie',
+      url: `${domain}/movie/${movie.id}/${slugify(movie.title)}`,
+      title: movie.title,
+      description: movie.overview,
       images: [
         {
-          url: image,
-          width: 780,
-          height: 439,
+          url: imageUrl,
+          width: 1280,
+          height: 720,
+          alt: movie.title,
         },
       ],
     },
+
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
-      images: [image],
+      title: movie.title,
+      description: movie.overview,
+      images: [imageUrl],
     },
   }
 }
-
 /* ================= PAGE ================= */
 export default async function Page({ params }: any) {
-  const movie = await tmdbFetch(`/movie/${params.id}?language=en-EN`)
+  const movie = await tmdbFetch(
+    `/movie/${params.id}?language=en-EN`
+  )
+
   if (!movie) notFound()
 
-  const credits = await tmdbFetch(`/movie/${params.id}/credits`)
-  const videos = await tmdbFetch(`/movie/${params.id}/videos`)
-  const trending = await tmdbFetch(`/movie/popular?language=id-ID`)
+  const credits = await tmdbFetch(
+    `/movie/${params.id}/credits`
+  )
+
+  const videos = await tmdbFetch(
+    `/movie/${params.id}/videos`
+  )
 
   const trailer = videos?.results?.find(
-    (v: any) => v.type === 'Trailer' && v.site === 'YouTube'
+    (v: any) =>
+      v.type === 'Trailer' && v.site === 'YouTube'
   )
 
   const director = credits?.crew?.find(
@@ -71,18 +81,26 @@ export default async function Page({ params }: any) {
   )
 
   const year = movie.release_date?.slice(0, 4) || 'N/A'
-  const runtime = movie.runtime ? `${movie.runtime} min` : 'N/A'
+  const runtime = movie.runtime
+    ? `${movie.runtime} min`
+    : 'N/A'
 
-  const movieUrl = `${DOMAIN}/movie/${movie.id}/${slugify(movie.title)}`
   const embedUrl = `https://vidsrc.to/embed/movie/${movie.id}`
+
+  const trending = await tmdbFetch(
+    `/movie/popular?language=id-ID`
+  )
+
+  const domain = 'https://moviepage-ten.vercel.app'
+  const movieUrl = `${domain}/movie/${movie.id}/${slugify(movie.title)}`
 
   return (
     <>
-      {/* ================= JSON-LD SEO (SERVER RENDERED) ================= */}
+      {/* ================= JSON-LD SEO ================= */}
       <Script
         id="movie-schema"
         type="application/ld+json"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
@@ -103,9 +121,27 @@ export default async function Page({ params }: any) {
       />
 
       <Script
+        id="website-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            url: domain,
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: `${domain}/search?q={search_term_string}`,
+              'query-input': 'required name=search_term_string',
+            },
+          }),
+        }}
+      />
+
+      <Script
         id="breadcrumb-schema"
         type="application/ld+json"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
@@ -115,13 +151,13 @@ export default async function Page({ params }: any) {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: DOMAIN,
+                item: domain,
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Movies',
-                item: `${DOMAIN}/movies`,
+                item: `${domain}/movies`,
               },
               {
                 '@type': 'ListItem',
@@ -138,21 +174,23 @@ export default async function Page({ params }: any) {
       <div id="container">
         <div className="module">
           <div className="content">
+
             {/* LEFT */}
             <div className="video-info-left">
-              <div className="watch_play">
-                <div className="play-video">
-                  <iframe
-                    id="player"
-                    src={embedUrl}
-                    allowFullScreen
-                    frameBorder="0"
-                    scrolling="no"
-                  />
+              <div className="content-more-js" id="rmjs-1">
+                <div className="watch_play">
+                  <div className="play-video">
+                    <iframe
+                      id="player"
+                      src={embedUrl}
+                      allowFullScreen
+                      frameBorder="0"
+                      scrolling="no"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="dst">
+                <div className="dst">
   {trailer && (
     <a
       href={`https://www.youtube.com/watch?v=${trailer.key}`}
@@ -249,9 +287,10 @@ export default async function Page({ params }: any) {
                         alt={m.title}
                       />
                       <div className="rating">
-                        ★ {m.vote_average?.toFixed(1)}
+                        <i className="fa fa-star"></i>{' '}
+                        {m.vote_average?.toFixed(1)}
                       </div>
-                      <a href={`/movie/${m.id}/${slugify(m.title)}.html`}>
+                      <a href={`/movie/${m.id}/${slugify(m.title)}`}>
                         <div className="see play3"></div>
                       </a>
                     </div>
