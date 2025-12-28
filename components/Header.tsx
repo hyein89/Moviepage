@@ -36,7 +36,7 @@ export default function Header() {
   }}
 >
   <input
-    type="search"
+    type="text"
     className="footer_search_input"
     name="q"
     placeholder="Search..."
