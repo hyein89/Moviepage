@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 import './globals.css'
 
 const SITE_NAME = 'WTS Movies'
-const SITE_URL = 'https://moviepage-ten.vercel.app'
+const SITE_URL = 'https://www.xydntvdsg.eu.org'
 const SITE_DESCRIPTION =
   'Watch popular movies, latest releases, trailers, and trending films online. Explore detailed movie information, ratings, and reviews.'
 
