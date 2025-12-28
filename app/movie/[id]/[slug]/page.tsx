@@ -290,7 +290,7 @@ export default async function Page({ params }: any) {
                         <i className="fa fa-star"></i>{' '}
                         {m.vote_average?.toFixed(1)}
                       </div>
-                      <a href={`/movie/${m.id}/${slugify(m.title)}`}>
+                      <a href={`/movie/${m.id}/${slugify(m.title)}.html`}>
                         <div className="see play3"></div>
                       </a>
                     </div>
