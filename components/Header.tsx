@@ -25,6 +25,7 @@ export default function Header() {
       </header>
 
       <div className="search_responsive">
+        
         <form
   method="get"
   id="form-search-resp"
