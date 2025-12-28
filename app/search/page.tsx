@@ -30,7 +30,7 @@ export default async function Page({
         <div className="module">
           <div className="content right full">
             <h1 className="Featured">Search</h1>
-            <p>Masukkan kata kunci pencarian.</p>
+            <p>Enter search keywords.</p>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default async function Page({
       <div id="container">
         <div className="module">
           <div className="content right full">
-            <p>Gagal mengambil data pencarian.</p>
+            <p>Failed to retrieve search data.</p>
           </div>
         </div>
       </div>
@@ -64,13 +64,13 @@ export default async function Page({
       <div className="module">
         <div className="content right full">
           <h1 className="Featured">
-            HASIL PENCARIAN: <span>{query}</span>
+            SEARCH RESULTS: <span>{query}</span>
           </h1>
 
           {/* LIST MOVIE */}
           <div className="animation-2 items full arch">
             {results.length === 0 && (
-              <p>Movie tidak ditemukan.</p>
+              <p>Movie not found.</p>
             )}
 
             {results.map((movie) => (
