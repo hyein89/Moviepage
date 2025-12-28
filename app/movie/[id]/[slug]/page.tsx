@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 /* ===== METADATA (SEO + OG IMAGE) ===== */
 export async function generateMetadata({ params }: any) {
   const movie = await tmdbFetch(
-    `/movie/${params.id}?language=id-ID`
+    `/movie/${params.id}?language=en-EN`
   )
 
   if (!movie) return {}
