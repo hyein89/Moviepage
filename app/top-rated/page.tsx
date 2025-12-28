@@ -4,6 +4,16 @@ import { slugify } from '../../lib/slug'
 
 export const dynamic = 'force-dynamic'
 
+export async function generateMetadata() {
+  const domain = 'https://www.xydntvdsg.eu.org'
+
+  return {
+    alternates: {
+      canonical: `${domain}/top-rated`,
+    },
+  }
+}
+
 type Movie = {
   id: number
   title: string
