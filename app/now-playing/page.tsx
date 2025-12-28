@@ -2,9 +2,13 @@ import { notFound } from "next/navigation";
 import { tmdbFetch } from '../../lib/tmdb'
 import { slugify } from '../../lib/slug'
 
+import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
-
-export async function generateMetadata() {
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: { page?: string }
+}): Promise<Metadata> {
   const domain = 'https://www.xydntvdsg.eu.org'
 
   return {
