@@ -23,6 +23,7 @@ export default async function Page({
   const query = searchParams?.q || ''
   const page = Number(searchParams?.page || 1)
 
+  // 👉 kalau belum ada keyword
   if (!query) {
     return (
       <div id="container">
@@ -36,30 +37,41 @@ export default async function Page({
     )
   }
 
+  // 👉 fetch search
   const data = await tmdbFetch(
     `/search/movie?language=en-EN&query=${encodeURIComponent(
       query
     )}&page=${page}`
   )
 
-  if (!data || !data.results) {
-    return <div>Gagal mengambil data search</div>
+  if (!data || !Array.isArray(data.results)) {
+    return (
+      <div id="container">
+        <div className="module">
+          <div className="content right full">
+            <p>Gagal mengambil data pencarian.</p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   const results: Movie[] = data.results
-  const nextPage = page + 1
-  const prevPage = page - 1
+  const totalPages: number = data.total_pages || 1
 
   return (
     <div id="container">
       <div className="module">
         <div className="content right full">
           <h1 className="Featured">
-            Hasil pencarian: <span>{query}</span>
+            HASIL PENCARIAN: <span>{query}</span>
           </h1>
 
+          {/* LIST MOVIE */}
           <div className="animation-2 items full arch">
-            {results.length === 0 && <p>Movie tidak ditemukan.</p>}
+            {results.length === 0 && (
+              <p>Movie tidak ditemukan.</p>
+            )}
 
             {results.map((movie) => (
               <article className="item" key={movie.id}>
@@ -87,7 +99,9 @@ export default async function Page({
 
                 <div className="data">
                   <h3>
-                    <a href={`/movie/${movie.id}/${slugify(movie.title)}.html`}>
+                    <a
+                      href={`/movie/${movie.id}/${slugify(movie.title)}.html`}
+                    >
                       {movie.title}
                     </a>
                   </h3>
@@ -97,44 +111,52 @@ export default async function Page({
             ))}
           </div>
 
-          {/* PAGINATION */}
-          <div className="pagination">
-            <ul className="pagination">
-              {page > 1 && (
-                <li className="previous">
-                  <a href={`/search?q=${query}&page=${prevPage}`}>{'<'}</a>
-                </li>
-              )}
-
-              {Array.from({ length: 5 }).map((_, i) => {
-                const p = page - 1 + i
-                if (p <= 0) return null
-
-                return (
-                  <li key={p} className={p === page ? 'active' : ''}>
-                    <a href={`/search?q=${query}&page=${p}`}>{p}</a>
+          {/* PAGINATION — MUNCUL HANYA JIKA VALID */}
+          {results.length > 0 && totalPages > 1 && (
+            <div className="pagination">
+              <ul className="pagination">
+                {page > 1 && (
+                  <li className="previous">
+                    <a href={`/search?q=${query}&page=${page - 1}`}>
+                      {'<'}
+                    </a>
                   </li>
-                )
-              })}
+                )}
 
-              <li className="next">
-                <a href={`/search?q=${query}&page=${nextPage}`}>{'>'}</a>
-              </li>
-            </ul>
-          </div>
+                {Array.from({ length: totalPages }).map((_, i) => {
+                  const p = i + 1
+
+                  // batasi max 10 tombol biar rapi
+                  if (p > 10) return null
+
+                  return (
+                    <li
+                      key={p}
+                      className={p === page ? 'active' : ''}
+                    >
+                      <a href={`/search?q=${query}&page=${p}`}>
+                        {p}
+                      </a>
+                    </li>
+                  )
+                })}
+
+                {page < totalPages && (
+                  <li className="next">
+                    <a href={`/search?q=${query}&page=${page + 1}`}>
+                      {'>'}
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
       <div className="clearfix" />
 
-      <div className="breadcrumb">
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>Search</li>
-        </ul>
-      </div>
+      
     </div>
   )
 }
