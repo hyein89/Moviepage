@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Script from 'next/script'
 import { tmdbFetch } from '../../../../lib/tmdb'
 import { slugify } from '../../../../lib/slug'
 
@@ -35,7 +36,6 @@ export default async function Page({ params }: any) {
 
   if (!movie) notFound()
 
-  // EXTRA DATA
   const credits = await tmdbFetch(
     `/movie/${params.id}/credits`
   )
@@ -53,8 +53,6 @@ export default async function Page({ params }: any) {
     (c: any) => c.job === 'Director'
   )
 
-  const cast = credits?.cast?.slice(0, 8) || []
-
   const year = movie.release_date?.slice(0, 4) || 'N/A'
   const runtime = movie.runtime
     ? `${movie.runtime} min`
@@ -66,107 +64,171 @@ export default async function Page({ params }: any) {
     `/movie/popular?language=id-ID`
   )
 
+  const domain = 'https://moviepage-ten.vercel.app'
+  const movieUrl = `${domain}/movie/${movie.id}/${slugify(movie.title)}`
+
   return (
-    <div id="container">
-      <div className="module">
-        <div className="content">
+    <>
+      {/* ================= JSON-LD SEO ================= */}
+      <Script
+        id="movie-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Movie',
+            '@id': movieUrl,
+            name: movie.title,
+            description: movie.overview,
+            dateCreated: movie.release_date,
+            image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              bestRating: '10',
+              ratingValue: movie.vote_average?.toFixed(1),
+              ratingCount: movie.vote_count,
+            },
+          }),
+        }}
+      />
 
-          {/* ================= LEFT ================= */}
-          <div className="video-info-left">
-            <div className="content-more-js" id="rmjs-1">
+      <Script
+        id="website-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            url: domain,
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: `${domain}/search?q={search_term_string}`,
+              'query-input': 'required name=search_term_string',
+            },
+          }),
+        }}
+      />
 
-              {/* PLAYER */}
-              <div className="watch_play">
-                <div className="play-video">
-                  <iframe
-                    id="player"
-                    src={embedUrl}
-                    allowFullScreen
-                    frameBorder="0"
-                    scrolling="no"
-                  />
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: domain,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Movies',
+                item: `${domain}/movies`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: movie.title,
+                item: movieUrl,
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ================= PAGE CONTENT ================= */}
+      <div id="container">
+        <div className="module">
+          <div className="content">
+
+            {/* LEFT */}
+            <div className="video-info-left">
+              <div className="content-more-js" id="rmjs-1">
+                <div className="watch_play">
+                  <div className="play-video">
+                    <iframe
+                      id="player"
+                      src={embedUrl}
+                      allowFullScreen
+                      frameBorder="0"
+                      scrolling="no"
+                    />
+                  </div>
                 </div>
-                <div className="clr"></div>
-              </div>
 
-              {/* ACTION */}
-              <div className="dst">
-                {trailer && (
-                  <a
-                    href={`https://www.youtube.com/watch?v=${trailer.key}`}
-                    target="_blank"
-                  >
-                    <i className="fas fa-play-circle"></i>{' '}
-                    Watch Trailer
-                  </a>
-                )}
-              </div>
-
-              <div className="clr"></div>
-
-              {/* INFO */}
-              <div className="rgt">
-                <div className="rgtp">
-                  <h1>
-                    {movie.title} - {year}
-                  </h1>
-
-                  <p>
-                    {movie.release_date} • {runtime}
-                  </p>
-
-                  <ul className="genre">
-                    {movie.genres?.map((g: any) => (
-                      <li key={g.id}>{g.name}</li>
-                    ))}
-                  </ul>
-
-                  <p>{movie.overview}</p>
-
-                  {/* DETAIL TABLE */}
-                  <ul className="movie-meta">
-                    <li>
-                      <strong>Rating:</strong>{' '}
-                      {movie.vote_average?.toFixed(1)} (
-                      {movie.vote_count} votes)
-                    </li>
-                    <li>
-                      <strong>Status:</strong> {movie.status}
-                    </li>
-                    <li>
-                      <strong>Director:</strong>{' '}
-                      {director?.name || 'N/A'}
-                    </li>
-                    <li>
-                      <strong>Country:</strong>{' '}
-                      {movie.production_countries
-                        ?.map((c: any) => c.name)
-                        .join(', ')}
-                    </li>
-                    <li>
-                      <strong>Language:</strong>{' '}
-                      {movie.spoken_languages
-                        ?.map((l: any) => l.english_name)
-                        .join(', ')}
-                    </li>
-                  </ul>
-
-                  
-                    </>
+                <div className="dst">
+                  {trailer && (
+                    <a
+                      href={`https://www.youtube.com/watch?v=${trailer.key}`}
+                      target="_blank"
+                    >
+                      <i className="fas fa-play-circle"></i> Watch Trailer
+                    </a>
                   )}
+                </div>
+
+                <div className="rgt">
+                  <div className="rgtp">
+                    <h1>
+                      {movie.title} - {year}
+                    </h1>
+
+                    <p>
+                      {movie.release_date} • {runtime}
+                    </p>
+
+                    <ul className="genre">
+                      {movie.genres?.map((g: any) => (
+                        <li key={g.id}>{g.name}</li>
+                      ))}
+                    </ul>
+
+                    <p>{movie.overview}</p>
+
+                    <ul className="movie-meta">
+                      <li>
+                        <strong>Rating:</strong>{' '}
+                        {movie.vote_average?.toFixed(1)} (
+                        {movie.vote_count} votes)
+                      </li>
+                      <li>
+                        <strong>Status:</strong> {movie.status}
+                      </li>
+                      <li>
+                        <strong>Director:</strong>{' '}
+                        {director?.name || 'N/A'}
+                      </li>
+                      <li>
+                        <strong>Country:</strong>{' '}
+                        {movie.production_countries
+                          ?.map((c: any) => c.name)
+                          .join(', ')}
+                      </li>
+                      <li>
+                        <strong>Language:</strong>{' '}
+                        {movie.spoken_languages
+                          ?.map((l: any) => l.english_name)
+                          .join(', ')}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* ================= RIGHT ================= */}
-          <div className="video-info-right">
-            <h2 className="widget-title">Trending Movies</h2>
+            {/* RIGHT */}
+            <div className="video-info-right">
+              <h2 className="widget-title">Trending Movies</h2>
 
-            <div className="animation-2 items">
-              {trending?.results
-                ?.slice(0, 6)
-                .map((m: any) => (
+              <div className="animation-2 items">
+                {trending?.results?.slice(0, 9).map((m: any) => (
                   <article className="item movies" key={m.id}>
                     <div className="poster">
                       <img
@@ -181,45 +243,21 @@ export default async function Page({ params }: any) {
                         <i className="fa fa-star"></i>{' '}
                         {m.vote_average?.toFixed(1)}
                       </div>
-                      <div className="mepo"></div>
-                      <a
-                        href={`/movie/${m.id}/${slugify(
-                          m.title
-                        )}`}
-                      >
+                      <a href={`/movie/${m.id}/${slugify(m.title)}`}>
                         <div className="see play3"></div>
                       </a>
                     </div>
-
                     <div className="data">
-                      <h3>
-                        <a
-                          href={`/movie/${m.id}/${slugify(
-                            m.title
-                          )}`}
-                        >
-                          {m.title}
-                        </a>
-                      </h3>
+                      <h3>{m.title}</h3>
                       <span>{m.release_date}</span>
                     </div>
                   </article>
                 ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div className="clearfix"></div>
-
-      {/* BREADCRUMB */}
-      <div className="breadcrumb">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/">Movies</a></li>
-          <li>{movie.title}</li>
-        </ul>
-      </div>
-    </div>
+    </>
   )
 }
