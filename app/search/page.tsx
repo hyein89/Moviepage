@@ -98,7 +98,7 @@ export default async function Page({
       <div className="module">
         <div className="content right full">
           <h1 className="Featured">
-            HASIL PENCARIAN: <span>{query}</span>
+            SEARCH RESULTS: <span>{query}</span>
           </h1>
 
           {/* ===== LIST MOVIE ===== */}
