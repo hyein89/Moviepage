@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { tmdbFetch } from '../../../../lib/tmdb'
 import { slugify } from '../../../../lib/slug'
+import { OFFER_LINKS } from '../../../../lib/offers'
 
 export const dynamic = 'force-dynamic'
 
@@ -171,6 +172,25 @@ export default async function Page({ params }: any) {
                     >
                       <i className="fas fa-play-circle"></i> Watch Trailer
                     </a>
+                     <a
+    href={OFFER_LINKS.torrent}
+    target="_blank"
+    rel="nofollow noopener noreferrer"
+    title={`Download torrent ${movie.title}`}
+  >
+    <i className="fas fa-download"></i> Download torrent
+  </a>
+
+  <a
+    href={OFFER_LINKS.subtitle}
+    target="_blank"
+    rel="nofollow noopener noreferrer"
+    title={`Download subtitle ${movie.title}`}
+  >
+    <i className="fas fa-download"></i> Download subtitle
+  </a>
+      
+      
                   )}
                 </div>
 
