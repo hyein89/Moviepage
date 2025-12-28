@@ -20,7 +20,7 @@ export async function generateMetadata(
     return {}
   }
 
-  const domain = 'https://moviepage-ten.vercel.app'
+  const domain = 'https://www.xydntvdsg.eu.org'
 
   const imageUrl = movie.backdrop_path
     ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
