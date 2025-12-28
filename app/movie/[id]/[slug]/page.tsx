@@ -151,17 +151,7 @@ export default async function Page({ params }: any) {
                     </li>
                   </ul>
 
-                  {/* CAST */}
-                  {cast.length > 0 && (
-                    <>
-                      <h3>Cast</h3>
-                      <ul className="cast">
-                        {cast.map((c: any) => (
-                          <li key={c.id}>
-                            {c.name} as {c.character}
-                          </li>
-                        ))}
-                      </ul>
+                  
                     </>
                   )}
                 </div>
