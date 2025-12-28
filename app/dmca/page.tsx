@@ -1,5 +1,14 @@
 export const dynamic = 'force-dynamic'
 
+  const domain = 'https://www.xydntvdsg.eu.org'
+
+  return {
+    alternates: {
+      canonical: `${domain}/dmca`,
+    },
+  }
+}
+
 export default function DMCA() {
   const domain =
     typeof window !== 'undefined'
