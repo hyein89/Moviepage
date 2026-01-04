@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
+import { SITE_URL as domain } from '../../lib/site'
+import { SITE_HOST } from '../../lib/site'
 export const dynamic = 'force-dynamic'
 export async function generateMetadata({
   searchParams,
 }: {
   searchParams?: { page?: string }
 }): Promise<Metadata> {
-  const domain = 'https://www.xydntvdsg.eu.org'
+  
 
   return {
     alternates: {
@@ -18,8 +20,8 @@ export default function DMCA() {
   const domain =
     typeof window !== 'undefined'
       ? window.location.hostname
-      : 'xydntvdsg.eu.org'
-
+      : SITE_HOST
+  
   return (
     <div id="container">
       <div
