@@ -1,12 +1,17 @@
-
 'use client'
 
+import { SITE_NAME } from '../lib/site'
+
 export default function Footer() {
+  const year = new Date().getFullYear()
+
   return (
     <footer className="main">
       <div className="fbox">
         <div className="fcmpbox">
-          <div className="copy">© 2025 WTS Movies </div>
+          <div className="copy">
+            © {year} Copyright {SITE_NAME}. All Rights Reserved.
+          </div>
 
           <span className="top-page">
             <a
