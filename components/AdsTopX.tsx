@@ -1,5 +1,6 @@
 'use client'
-import { OFFER_LINKS } from '@/lib/offer'
+import { OFFER_LINKS } from '../lib/offer'
+
 
 
 export default function AdsTopX() {
