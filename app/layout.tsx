@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import AdsTopX from '../components/AdsTopX'
 import './globals.css'
+
 
 const SITE_NAME = 'WTS Movies'
 const SITE_URL = 'https://www.xydntvdsg.eu.org'
@@ -108,6 +110,9 @@ export default function RootLayout({
       </head>
 
       <body>
+{/* ADS AREA */}
+  <AdsTopX />
+        
         <Header />
 
         <main id="app">{children}</main>
@@ -161,7 +166,9 @@ export default function RootLayout({
           src="/js/header.js"
           strategy="afterInteractive"
         />
+          {/* script-script lu BIARIN */}
       </body>
     </html>
   )
 }
+
