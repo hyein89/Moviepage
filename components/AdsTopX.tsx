@@ -25,7 +25,7 @@ export default function AdsTopX() {
         </div>
 
         <div className="adsTopX_action">
-          <a href="#" className="adsTopX_button">
+          <a href="https://imens-poort.com/?s=4&t1=954&t4=Yasue" className="adsTopX_button">
             Sign Up & Watch Ad-Free
           </a>
         </div>
