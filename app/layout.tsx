@@ -3,12 +3,8 @@ import Script from 'next/script'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import AdsTopX from '../components/AdsTopX'
-import { SITE_NAME, SITE_URL } from '../lib/site'
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION} from '../lib/site'
 import './globals.css'
-
-
-const SITE_DESCRIPTION =
-  'Watch popular movies, latest releases, trailers, and trending films online. Explore detailed movie information, ratings, and reviews.'
 
 /* ================= METADATA SEO ================= */
 export const metadata: Metadata = {
