@@ -8,7 +8,6 @@ export async function generateMetadata({
   searchParams?: { page?: string }
 }): Promise<Metadata> {
   
-
   return {
     alternates: {
       canonical: `${domain}/dmca`,
