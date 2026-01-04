@@ -157,10 +157,7 @@ export default function RootLayout({
         />
 
 {/* POPUNDER */}
-  <Script
-    src="https://signingunwilling.com/54/07/c5/5407c59607ecdd93748e27b4442c7d89.js"
-    strategy="afterInteractive"
-  />
+  
         
         <Script
           src="/js/header.js"
