@@ -1,5 +1,5 @@
 'use client'
-import { OFFER_LINKS } from '../lib/offer'
+import { OFFER_LINKS } from '../lib/offers'
 
 export default function AdsTopX() {
   const closeAds = () => {
