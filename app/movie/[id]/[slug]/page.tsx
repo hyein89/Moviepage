@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import { tmdbFetch } from '../../../../lib/tmdb'
 import { slugify } from '../../../../lib/slug'
 import { OFFER_LINKS } from '../../../../lib/offers'
-
+import { SITE_URL as domain } from '../../../../lib/site'
 export const dynamic = 'force-dynamic'
 
 /* ================= METADATA ================= */
@@ -19,7 +19,6 @@ export async function generateMetadata(
 
   if (!movie) return {}
 
-  const domain = 'https://www.xydntvdsg.eu.org'
 
   const imageUrl = movie.backdrop_path
     ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
@@ -98,7 +97,7 @@ export default async function Page({ params }: any) {
     `/movie/popular?language=id-ID`
   )
 
-  const domain = 'https://moviepage-ten.vercel.app'
+  
   const movieUrl = `${domain}/movie/${movie.id}/${slugify(movie.title)}`
 
   return (
