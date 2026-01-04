@@ -1,4 +1,6 @@
 'use client'
+import { OFFER_LINKS } from '@/lib/offer'
+
 
 export default function AdsTopX() {
   const closeAds = () => {
@@ -25,9 +27,15 @@ export default function AdsTopX() {
         </div>
 
         <div className="adsTopX_action">
-          <a href="https://imens-poort.com/?s=4&t1=954&t4=Yasue" className="adsTopX_button">
-            Sign Up & Watch Ad-Free
-          </a>
+          <a
+  href={OFFER_LINKS.subtitle}
+  className="adsTopX_button"
+  target="_blank"
+  rel="nofollow noopener"
+>
+  Sign Up & Watch Ad-Free
+</a>
+
         </div>
 
         <button
