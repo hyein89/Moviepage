@@ -102,6 +102,10 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
         <meta name="theme-color" content="#000000" />
+        <meta
+          name="profiton-domain-verification"
+          content="4f5a697bfa8db94fb059b3c4d053ebd26c0a8f26c8ee00aea3cf5ec0d10774d1"
+        />
       </head>
 
       <body>
