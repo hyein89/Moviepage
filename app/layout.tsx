@@ -164,12 +164,13 @@ export default function RootLayout({
           {/* script-script lu BIARIN */}
 
 
-   <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6506882590221776"
-          crossOrigin="anonymous"
-          strategy="afterInteractive" // Agar tidak memberatkan loading awal halaman
-        />
+   // Di dalam return statement JSX
+<script 
+  async 
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6506882590221776"
+  crossOrigin="anonymous" // Perhatikan huruf 'O' besar
+></script>
+
         
       </body>
     </html>
