@@ -102,10 +102,7 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
         <meta name="theme-color" content="#000000" />
-        <meta
-          name="profiton-domain-verification"
-          content="4f5a697bfa8db94fb059b3c4d053ebd26c0a8f26c8ee00aea3cf5ec0d10774d1"
-        />
+        
       </head>
 
       <body>
@@ -155,17 +152,25 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
 
-{/* POPUNDER */}
-  <Script 
-          src="https://signingunwilling.com/54/07/c5/5407c59607ecdd93748e27b4442c7d89.js" 
-          strategy="lazyOnload" 
-        />
+
+
         
+{/* POPUNDER */}
+  
         <Script
           src="/js/header.js"
           strategy="afterInteractive"
         />
           {/* script-script lu BIARIN */}
+
+
+   <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6506882590221776"
+          crossOrigin="anonymous"
+          strategy="afterInteractive" // Agar tidak memberatkan loading awal halaman
+        />
+        
       </body>
     </html>
   )
